@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" content="#7c3aed" />
+<title>Mishad Wifi Zone — Payment Portal</title>
+
+<script>
+(function(){
+  try{
+    var t = localStorage.getItem('mishadWifiZoneTheme');
+    if(!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  }catch(e){ document.documentElement.setAttribute('data-theme','light'); }
+})();
+</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   MISHAD WIFI ZONE · AURORA GLASS EDITION
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  --bg:#f5f4fb;
+  --bg-2:#ecedf7;
+  --surface:rgba(255,255,255,.7);
+  --surface-solid:#ffffff;
+  --surface-2:#f9f9fd;
+  --surface-3:#f2f3fa;
+  --border:rgba(11,16,32,.08);
+  --border-2:rgba(11,16,32,.14);
+  --text:#0b1020;
+  --text-2:#3b4462;
+  --muted:#6e7694;
+
+  --v1:#7c3aed;
+  --v2:#d946ef;
+  --v3:#06b6d4;
+  --grad: linear-gradient(135deg,#7c3aed 0%,#d946ef 45%,#06b6d4 100%);
+  --grad-soft: linear-gradient(135deg,rgba(124,58,237,.12),rgba(6,182,212,.12));
+  --grad-brand: linear-gradient(135deg,#7c3aed,#06b6d4);
+
+  --ok:#10b981;
+  --danger:#ef4444;
+  --danger-bg:rgba(239,68,68,.08);
+  --danger-border:rgba(239,68,68,.26);
+
+  --ring:rgba(124,58,237,.18);
+  --tint:rgba(124,58,237,.06);
+
+  --sh-sm:0 1px 2px rgba(11,16,32,.04),0 4px 14px rgba(11,16,32,.05);
+  --sh-md:0 4px 10px rgba(11,16,32,.05),0 18px 44px rgba(11,16,32,.09);
+  --sh-lg:0 28px 70px rgba(11,16,32,.14);
+  --sh-brand:0 14px 44px -10px rgba(124,58,237,.4);
+
+  --header-bg:rgba(255,255,255,.72);
+  --overlay:rgba(11,16,32,.5);
+
+  --r-lg:26px;
+}
+
+html[data-theme="dark"]{
+  --bg:#07070f;
+  --bg-2:#0c0c18;
+  --surface:rgba(22,22,36,.6);
+  --surface-solid:#12121e;
+  --surface-2:#16162a;
+  --surface-3:#1c1c2e;
+  --border:rgba(255,255,255,.07);
+  --border-2:rgba(255,255,255,.14);
+  --text:#f0f1f8;
+  --text-2:#c5c8dd;
+  --muted:#8b8fa8;
+
+  --v1:#a78bfa;
+  --v2:#e879f9;
+  --v3:#22d3ee;
+
+  --danger-bg:rgba(239,68,68,.14);
+  --danger-border:rgba(239,68,68,.3);
+  --ok:#4ade80;
+
+  --ring:rgba(167,139,250,.24);
+  --tint:rgba(167,139,250,.1);
+
+  --sh-sm:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.35);
+  --sh-md:0 4px 12px rgba(0,0,0,.4),0 20px 50px rgba(0,0,0,.45);
+  --sh-lg:0 30px 80px rgba(0,0,0,.6);
+  --sh-brand:0 14px 44px -10px rgba(167,139,250,.4);
+
+  --header-bg:rgba(9,9,17,.72);
+  --overlay:rgba(3,3,7,.7);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px;-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;min-height:100vh;overflow-x:hidden;
+  font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.6;color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  transition:background-color .4s ease,color .3s ease;
+  position:relative;
+}
+
+body::before,body::after{
+  content:'';position:fixed;border-radius:50%;
+  filter:blur(90px);pointer-events:none;z-index:0;
+  opacity:.55;will-change:transform;
+}
+body::before{
+  width:520px;height:520px;top:-160px;left:-140px;
+  background:radial-gradient(circle,#7c3aed,transparent 70%);
+  animation:float1 22s ease-in-out infinite;
+}
+body::after{
+  width:600px;height:600px;top:20%;right:-220px;
+  background:radial-gradient(circle,#06b6d4,transparent 70%);
+  animation:float2 26s ease-in-out infinite;
+}
+html[data-theme="dark"] body::before,
+html[data-theme="dark"] body::after{opacity:.28}
+
+@keyframes float1{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(60px,80px) scale(1.15)}
+}
+@keyframes float2{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-80px,60px) scale(1.1)}
+}
+
+h1,h2,h3,h4{margin:0;line-height:1.15;letter-spacing:-.03em;font-weight:800}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+[hidden]{display:none !important}
+
+:focus-visible{outline:2px solid var(--v1);outline-offset:3px;border-radius:12px}
+
+.wrap{width:100%;max-width:1180px;margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:50px;padding:13px 22px;
+  border:1.5px solid transparent;border-radius:16px;
+  font-size:.94rem;font-weight:640;letter-spacing:-.01em;
+  white-space:nowrap;user-select:none;
+  transition:transform .18s cubic-bezier(.22,1,.36,1),box-shadow .25s ease,
+             background .25s ease,border-color .25s ease,color .25s ease,opacity .2s ease;
+  position:relative;overflow:hidden;
+}
+.btn:active:not(:disabled){transform:scale(.97)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+
+.btn-primary{
+  background:var(--grad);color:#fff;
+  box-shadow:var(--sh-brand);
+  background-size:200% 200%;
+  animation:gradShift 8s ease infinite;
+}
+@keyframes gradShift{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+.btn-primary:hover:not(:disabled){
+  box-shadow:0 20px 50px -10px rgba(124,58,237,.55);
+  transform:translateY(-2px);
+}
+
+.btn-ghost{
+  background:var(--surface-solid);color:var(--text);
+  border-color:var(--border-2);
+  box-shadow:var(--sh-sm);
+}
+.btn-ghost:hover:not(:disabled){
+  border-color:var(--v1);color:var(--v1);
+  transform:translateY(-2px);
+  box-shadow:var(--sh-md);
+}
+
+.btn-block{width:100%}
+.btn-sm{min-height:40px;padding:8px 16px;font-size:.85rem;border-radius:12px}
+
+.icon-btn{
+  display:grid;place-items:center;
+  width:46px;height:46px;border-radius:14px;
+  border:1.5px solid var(--border);
+  background:var(--surface-solid);
+  color:var(--text-2);
+  transition:all .22s ease;
+}
+.icon-btn:hover{border-color:var(--v1);color:var(--v1);transform:translateY(-2px)}
+.icon-btn:active{transform:scale(.94)}
+
+.spinner{
+  width:16px;height:16px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.35);
+  border-top-color:#fff;
+  animation:spin .7s linear infinite;flex:0 0 auto;
+}
+.btn-ghost .spinner{border-color:var(--border-2);border-top-color:var(--v1)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Header ───────────────────────────────────────────────── */
+.hdr{
+  position:sticky;top:0;z-index:60;
+  padding:14px 0;
+  background:var(--header-bg);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+}
+.hdr-in{
+  display:flex;align-items:center;gap:14px;
+  position:relative;
+}
+
+.logo{display:inline-flex;align-items:center;gap:11px;font-weight:800;font-size:1.02rem;letter-spacing:-.03em;flex:0 0 auto}
+.logo-mark{
+  width:42px;height:42px;border-radius:14px;
+  display:grid;place-items:center;
+  background:var(--grad);background-size:200% 200%;
+  color:#fff;box-shadow:var(--sh-brand);
+  animation:gradShift 8s ease infinite;
+}
+.logo-txt{display:flex;flex-direction:column;line-height:1.1}
+.logo-txt small{
+  font-size:.62rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+
+.nav{display:none}
+.nav a{
+  display:block;padding:9px 15px;border-radius:12px;
+  font-size:.9rem;font-weight:600;color:var(--muted);
+  transition:all .2s ease;
+}
+.nav a:hover{color:var(--text);background:var(--surface-3)}
+
+.hdr-act{display:flex;align-items:center;gap:8px;margin-left:auto}
+
+@media(min-width:900px){
+  .nav{display:flex;align-items:center;gap:2px;margin-left:28px}
+  .menu-btn{display:none}
+}
+@media(max-width:899px){
+  .nav{
+    position:absolute;top:calc(100% + 14px);left:0;right:0;
+    flex-direction:column;gap:2px;padding:12px;
+    background:var(--surface-solid);
+    border:1px solid var(--border);border-radius:20px;
+    box-shadow:var(--sh-lg);display:none;
+  }
+  .nav.on{display:flex;animation:drop .24s cubic-bezier(.22,1,.36,1)}
+  .nav a{padding:14px 16px;font-size:.97rem}
+}
+@keyframes drop{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero{padding:56px 0 20px;position:relative;overflow:hidden}
+.hero-grid{display:grid;gap:40px;align-items:center}
+@media(min-width:960px){
+  .hero{padding:88px 0 40px}
+  .hero-grid{grid-template-columns:1.08fr .92fr;gap:64px}
+}
+
+.chip{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:8px 16px;border-radius:999px;
+  background:var(--surface-solid);border:1px solid var(--border);
+  box-shadow:var(--sh-sm);
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:22px;
+}
+.chip .pulse{
+  width:7px;height:7px;border-radius:50%;background:var(--ok);
+  box-shadow:0 0 0 0 rgba(16,185,129,.6);
+  animation:ping 2s ease-out infinite;
+}
+@keyframes ping{
+  0%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}
+  70%{box-shadow:0 0 0 10px rgba(16,185,129,0)}
+  100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}
+}
+
+.hero h1{
+  font-size:clamp(2.3rem,7.5vw,3.8rem);
+  font-weight:860;letter-spacing:-.045em;
+  line-height:1.03;
+}
+.hero h1 .accent{
+  background:var(--grad);background-size:200% 200%;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  animation:gradShift 6s ease infinite;
+}
+.hero-sub{
+  margin-top:22px;font-size:clamp(1.02rem,2.6vw,1.15rem);
+  color:var(--muted);max-width:48ch;line-height:1.65;
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero-cta .btn{flex:1 1 auto;min-width:160px}
+
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:16px 28px;
+  margin-top:32px;padding-top:26px;
+  border-top:1px dashed var(--border-2);
+}
+.hero-stat{display:flex;flex-direction:column}
+.hero-stat b{
+  font-size:1.35rem;font-weight:840;letter-spacing:-.03em;
+  background:var(--grad-brand);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-stat span{font-size:.78rem;color:var(--muted);font-weight:600;margin-top:2px}
+
+/* Payment card */
+.pay-card{
+  position:relative;
+  padding:28px 26px 24px;
+  border-radius:30px;
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-lg);
+  overflow:hidden;
+  isolation:isolate;
+}
+.pay-card::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(500px 260px at 100% -10%,rgba(217,70,239,.14),transparent 65%),
+    radial-gradient(400px 240px at -10% 110%,rgba(6,182,212,.14),transparent 65%);
+}
+.pay-card::after{
+  content:'';position:absolute;top:-2px;left:20%;right:20%;height:2px;
+  background:var(--grad);border-radius:2px;
+  filter:blur(1px);
+}
+
+.pay-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.66rem;font-weight:750;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:14px;
+}
+.pay-tag .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--ok);box-shadow:0 0 8px var(--ok);
+}
+
+.pay-num{
+  font-size:clamp(2rem,8.5vw,2.6rem);
+  font-weight:860;letter-spacing:.005em;
+  font-variant-numeric:tabular-nums;
+  background:var(--grad);background-size:200% 200%;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  animation:gradShift 6s ease infinite;
+  word-break:break-all;
+  line-height:1.1;
+}
+
+.pay-mth{
+  margin-top:10px;font-size:.92rem;font-weight:600;
+  color:var(--text-2);letter-spacing:.005em;
+}
+
+.pay-div{
+  height:1px;margin:22px 0;
+  background:linear-gradient(90deg,var(--border-2),transparent);
+}
+
+.pay-copy{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  width:100%;min-height:52px;padding:14px 20px;
+  border-radius:16px;
+  background:var(--grad);background-size:200% 200%;
+  color:#fff;font-weight:680;font-size:.94rem;
+  box-shadow:var(--sh-brand);
+  animation:gradShift 8s ease infinite;
+  transition:transform .2s ease,box-shadow .28s ease;
+}
+.pay-copy:hover{transform:translateY(-2px);box-shadow:0 20px 50px -10px rgba(124,58,237,.55)}
+.pay-copy:active{transform:scale(.97)}
+
+.pay-help{
+  margin-top:16px;padding-top:16px;
+  border-top:1px dashed var(--border-2);
+  font-size:.82rem;color:var(--muted);
+  display:flex;gap:9px;line-height:1.55;
+}
+.pay-help svg{flex:0 0 auto;margin-top:3px;color:var(--v1)}
+
+/* ── Section ──────────────────────────────────────────────── */
+.sect{padding:64px 0;position:relative}
+.sect-alt{
+  background:var(--bg-2);
+  border-block:1px solid var(--border);
+}
+
+.sect-head{max-width:680px;margin-bottom:36px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.7rem;font-weight:750;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--v1);
+  margin-bottom:14px;
+}
+.eyebrow::before{
+  content:'';width:22px;height:1.5px;
+  background:var(--grad-brand);border-radius:2px;
+}
+.sect-head h2{font-size:clamp(1.65rem,5vw,2.4rem);letter-spacing:-.035em}
+.sect-head p{margin-top:12px;color:var(--muted);font-size:.97rem;line-height:1.65}
+
+/* ── Timeline ─────────────────────────────────────────────── */
+.timeline{
+  display:grid;gap:16px;position:relative;
+  padding:0;margin:0;list-style:none;
+}
+@media(min-width:820px){.timeline{grid-template-columns:1fr 1fr;gap:18px}}
+
+.tl-item{
+  display:flex;gap:16px;padding:20px 22px;
+  border-radius:20px;
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-sm);
+  transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s ease,border-color .25s ease;
+  position:relative;overflow:hidden;
+}
+.tl-item::before{
+  content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;
+  background:var(--grad-brand);border-radius:3px;
+  opacity:0;transition:opacity .25s ease;
+}
+.tl-item:hover{transform:translateY(-3px);box-shadow:var(--sh-md);border-color:var(--border-2)}
+.tl-item:hover::before{opacity:1}
+
+.tl-num{
+  flex:0 0 auto;width:46px;height:46px;
+  border-radius:14px;
+  display:grid;place-items:center;
+  font-size:.92rem;font-weight:820;
+  font-variant-numeric:tabular-nums;
+  color:#fff;background:var(--grad);background-size:200% 200%;
+  box-shadow:0 10px 24px -10px rgba(124,58,237,.5);
+  animation:gradShift 8s ease infinite;
+}
+.tl-body h3{font-size:1rem;font-weight:720;letter-spacing:-.02em}
+.tl-body p{margin-top:5px;font-size:.885rem;color:var(--muted);line-height:1.6}
+.tl-body strong{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ── Packages ─────────────────────────────────────────────── */
+.pkgs{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:620px){.pkgs{grid-template-columns:repeat(3,1fr);gap:18px}}
+
+.pkg{
+  position:relative;display:flex;flex-direction:column;
+  width:100%;padding:26px 22px 22px;
+  text-align:left;border-radius:24px;
+  background:var(--surface-solid);
+  border:1.5px solid var(--border);
+  box-shadow:var(--sh-sm);
+  transition:all .28s cubic-bezier(.22,1,.36,1);
+  overflow:hidden;
+}
+.pkg::before{
+  content:'';position:absolute;inset:0;
+  background:var(--grad-soft);
+  opacity:0;transition:opacity .3s ease;pointer-events:none;
+}
+.pkg:hover{
+  transform:translateY(-4px);
+  border-color:var(--border-2);
+  box-shadow:var(--sh-md);
+}
+.pkg[aria-pressed="true"]{
+  border-color:transparent;
+  box-shadow:0 0 0 2px var(--v1),var(--sh-lg);
+  transform:translateY(-4px);
+}
+.pkg[aria-pressed="true"]::before{opacity:1}
+
+.pkg-num{
+  position:absolute;top:20px;right:22px;
+  font-size:.72rem;font-weight:800;letter-spacing:.14em;
+  color:var(--muted);opacity:.6;
+  font-variant-numeric:tabular-nums;
+}
+.pkg-check{
+  position:absolute;top:18px;right:18px;
+  width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--grad-brand);color:#fff;
+  box-shadow:0 6px 16px -4px rgba(124,58,237,.5);
+  opacity:0;transform:scale(.5) rotate(-30deg);
+  transition:opacity .28s ease,transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.pkg[aria-pressed="true"] .pkg-check{opacity:1;transform:scale(1) rotate(0)}
+.pkg[aria-pressed="true"] .pkg-num{opacity:0}
+
+.pkg-name{
+  font-size:1.08rem;font-weight:760;letter-spacing:-.025em;
+  color:var(--text-2);
+}
+.pkg-price{
+  margin-top:10px;
+  font-size:2.4rem;font-weight:860;
+  letter-spacing:-.045em;line-height:1;
+  background:var(--grad);background-size:200% 200%;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  animation:gradShift 8s ease infinite;
+  font-variant-numeric:tabular-nums;
+}
+.pkg-price small{font-size:1.3rem;font-weight:700;margin-right:2px}
+.pkg-dur{
+  margin-top:8px;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.85rem;font-weight:600;color:var(--muted);
+}
+.pkg-dur::before{
+  content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--v1);opacity:.7;
+}
+
+.pkg-cta{
+  margin-top:20px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:44px;padding:10px 16px;
+  border-radius:13px;
+  border:1.5px solid var(--border-2);
+  background:var(--surface-2);
+  font-size:.85rem;font-weight:700;
+  color:var(--text-2);
+  transition:all .25s ease;
+}
+.pkg[aria-pressed="true"] .pkg-cta{
+  background:var(--grad);background-size:200% 200%;
+  color:#fff;border-color:transparent;
+  box-shadow:0 10px 26px -10px rgba(124,58,237,.5);
+  animation:gradShift 8s ease infinite;
+}
+
+/* ── Methods ─────────────────────────────────────────────── */
+.mths{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:620px){.mths{grid-template-columns:repeat(4,1fr);gap:14px}}
+
+.mth{
+  position:relative;display:flex;flex-direction:column;
+  align-items:flex-start;gap:12px;
+  padding:18px 16px;
+  border-radius:20px;
+  background:var(--surface-solid);
+  border:1.5px solid var(--border);
+  box-shadow:var(--sh-sm);
+  transition:all .25s cubic-bezier(.22,1,.36,1);
+  overflow:hidden;
+}
+.mth::before{
+  content:'';position:absolute;inset:0;
+  background:var(--grad-soft);
+  opacity:0;transition:opacity .3s ease;pointer-events:none;
+}
+.mth:hover{transform:translateY(-3px);border-color:var(--border-2);box-shadow:var(--sh-md)}
+.mth[aria-pressed="true"]{
+  border-color:transparent;
+  box-shadow:0 0 0 2px var(--v1),var(--sh-lg);
+  transform:translateY(-3px);
+}
+.mth[aria-pressed="true"]::before{opacity:1}
+
+.mth-mark{
+  width:34px;height:34px;border-radius:11px;
+  display:grid;place-items:center;
+  color:#fff;font-size:.85rem;font-weight:820;
+  box-shadow:0 8px 20px -8px rgba(0,0,0,.35);
+}
+.mth-name{font-size:.95rem;font-weight:700;letter-spacing:-.01em;position:relative}
+.mth-check{
+  position:absolute;top:12px;right:12px;
+  width:20px;height:20px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--grad-brand);color:#fff;
+  opacity:0;transform:scale(.5);
+  transition:opacity .25s ease,transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.mth[aria-pressed="true"] .mth-check{opacity:1;transform:scale(1)}
+
+/* ── Submit layout ────────────────────────────────────────── */
+.sub-lay{display:grid;gap:22px;margin-top:44px}
+@media(min-width:1000px){
+  .sub-lay{grid-template-columns:1.15fr .85fr;gap:26px;align-items:start}
+}
+
+.panel{
+  border-radius:var(--r-lg);
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-sm);
+  padding:26px;
+}
+
+.panel-title{
+  font-size:1.06rem;font-weight:760;letter-spacing:-.025em;
+  display:flex;align-items:center;gap:10px;margin-bottom:6px;
+}
+.panel-title svg{color:var(--v1);flex:0 0 auto}
+.panel-sub{font-size:.85rem;color:var(--muted);margin-bottom:22px}
+
+/* ── Form ─────────────────────────────────────────────────── */
+.fld{margin-bottom:18px}
+.fld:last-of-type{margin-bottom:8px}
+.fld label{
+  display:block;margin-bottom:8px;
+  font-size:.86rem;font-weight:640;color:var(--text-2);
+  letter-spacing:-.005em;
+}
+.req{color:var(--danger);margin-left:3px}
+.opt{font-size:.72rem;font-weight:600;color:var(--muted);margin-left:6px}
+
+.inp{
+  display:flex;align-items:center;
+  border:1.5px solid var(--border);
+  border-radius:15px;
+  background:var(--surface-2);
+  transition:all .2s ease;
+}
+.inp:focus-within{
+  border-color:var(--v1);
+  background:var(--surface-solid);
+  box-shadow:0 0 0 4px var(--ring);
+}
+.inp.bad{border-color:var(--danger);box-shadow:0 0 0 4px var(--danger-bg)}
+.inp input{
+  flex:1 1 auto;width:100%;min-width:0;
+  padding:15px 17px;
+  border:0;background:transparent;
+  border-radius:15px;font-size:.97rem;outline:none;
+}
+.inp input::placeholder{color:var(--muted);opacity:.75}
+.inp .cur{
+  padding-left:17px;font-weight:760;
+  color:var(--muted);font-size:1rem;
+}
+.inp .cur + input{padding-left:8px}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+
+.fld-err{
+  display:none;margin-top:7px;
+  font-size:.81rem;font-weight:600;color:var(--danger);
+}
+.fld-err.on{display:block;animation:shake .28s ease}
+@keyframes shake{
+  0%{opacity:0;transform:translateX(-4px)}
+  55%{opacity:1;transform:translateX(3px)}
+  100%{opacity:1;transform:translateX(0)}
+}
+
+.hint{
+  margin-top:7px;font-size:.79rem;color:var(--muted);
+  display:flex;gap:7px;line-height:1.55;
+}
+.hint svg{flex:0 0 auto;margin-top:3px;color:var(--v1);opacity:.8}
+
+.grid-err{
+  display:none;margin-top:12px;
+  font-size:.85rem;font-weight:640;color:var(--danger);
+}
+.grid-err.on{display:block}
+
+.form-act{margin-top:24px}
+.form-note{
+  margin-top:12px;font-size:.79rem;
+  color:var(--muted);text-align:center;line-height:1.6;
+}
+
+/* ── Live summary ─────────────────────────────────────────── */
+.sum-card{position:relative;overflow:hidden}
+@media(min-width:1000px){.sum-card{position:sticky;top:110px}}
+
+.sum-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:18px;
+}
+.sum-title{
+  font-size:.72rem;font-weight:780;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.live{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 11px;border-radius:999px;
+  background:var(--tint);color:var(--v1);
+  border:1px solid var(--ring);
+  font-size:.66rem;font-weight:760;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.live .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--v1);
+  animation:ping 2s ease-out infinite;
+}
+
+.rows{display:flex;flex-direction:column}
+.row{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:14px;padding:11px 0;
+  border-bottom:1px dashed var(--border);
+  font-size:.885rem;
+}
+.row:last-child{border-bottom:0;padding-bottom:0}
+.row:first-child{padding-top:0}
+.row-k{color:var(--muted);flex:0 0 auto;font-weight:560}
+.row-v{
+  font-weight:680;text-align:right;
+  word-break:break-word;overflow-wrap:anywhere;
+}
+.row-v.blank{color:var(--muted);font-weight:520;font-style:italic}
+.row-v.amt{color:var(--v1);font-weight:820;font-size:1.05rem;font-variant-numeric:tabular-nums}
+
+/* ── Submission panel ─────────────────────────────────────── */
+.sub-panel{
+  margin-top:38px;padding:26px;
+  border-radius:var(--r-lg);
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-md);
+  animation:rise .35s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden;
+}
+.sub-panel::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--grad);background-size:200% 200%;
+  animation:gradShift 8s ease infinite;
+}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.sp-head{
+  display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:16px;margin-bottom:8px;
+}
+.sp-head h3{
+  font-size:1.14rem;font-weight:780;letter-spacing:-.03em;
+  display:flex;align-items:center;gap:10px;
+}
+.sp-head h3 .ok-mark{
+  width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#10b981,#059669);
+  color:#fff;box-shadow:0 8px 20px -8px rgba(16,185,129,.6);
+}
+.sp-meta{
+  margin-top:8px;font-size:.85rem;color:var(--muted);
+}
+.sp-meta strong{
+  color:var(--text);font-variant-numeric:tabular-nums;
+  font-weight:720;
+}
+
+.sp-note{margin:18px 0 16px;font-size:.9rem;color:var(--muted)}
+
+.sends{display:grid;gap:14px}
+@media(min-width:740px){.sends{grid-template-columns:repeat(3,1fr)}}
+
+.send{
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:4px;width:100%;padding:20px;
+  min-height:116px;text-align:left;
+  border-radius:20px;
+  background:var(--surface-solid);
+  border:1.5px solid var(--border);
+  box-shadow:var(--sh-sm);
+  transition:all .25s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden;
+}
+.send::after{
+  content:'';position:absolute;inset:0;
+  background:var(--grad-soft);opacity:0;
+  transition:opacity .3s ease;pointer-events:none;
+}
+.send:hover:not(:disabled){
+  transform:translateY(-4px);
+  border-color:var(--border-2);
+  box-shadow:var(--sh-md);
+}
+.send:hover:not(:disabled)::after{opacity:1}
+.send:active:not(:disabled){transform:translateY(-2px) scale(.985)}
+
+.send-mark{
+  width:46px;height:46px;border-radius:14px;
+  display:grid;place-items:center;color:#fff;
+  margin-bottom:12px;
+  box-shadow:0 10px 24px -10px rgba(0,0,0,.4);
+  position:relative;z-index:1;
+}
+.send.wa .send-mark{background:linear-gradient(135deg,#25d366,#0f8f66)}
+.send.em .send-mark{background:linear-gradient(135deg,#f97316,#e11d48)}
+.send.tg .send-mark{background:linear-gradient(135deg,#38bdf8,#2563eb)}
+
+.send-t{font-size:.98rem;font-weight:740;letter-spacing:-.015em;position:relative;z-index:1}
+.send-s{font-size:.79rem;color:var(--muted);position:relative;z-index:1}
+
+.sp-hint{
+  margin-top:18px;padding:14px 16px;
+  border-radius:16px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  font-size:.82rem;color:var(--muted);
+  display:flex;gap:10px;line-height:1.6;
+}
+.sp-hint svg{flex:0 0 auto;margin-top:3px;color:var(--v1)}
+.sp-hint strong{color:var(--text);font-weight:700}
+
+/* ── Modals ───────────────────────────────────────────────── */
+.ov{
+  position:fixed;inset:0;z-index:120;
+  display:grid;place-items:center;padding:16px;
+  background:var(--overlay);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  opacity:0;transition:opacity .24s ease;
+  overflow-y:auto;
+}
+.ov.on{opacity:1}
+
+.md{
+  width:100%;max-width:580px;max-height:88vh;
+  display:flex;flex-direction:column;
+  border-radius:26px;
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-lg);
+  transform:translateY(20px) scale(.96);
+  transition:transform .3s cubic-bezier(.22,1,.36,1);
+  margin:auto;overflow:hidden;
+}
+.ov.on .md{transform:translateY(0) scale(1)}
+
+.md-head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;padding:24px 24px 16px;
+  border-bottom:1px solid var(--border);
+}
+.md-head h3{font-size:1.2rem;letter-spacing:-.03em}
+.md-head p{font-size:.85rem;color:var(--muted);margin-top:6px;line-height:1.55}
+.md-x{
+  width:40px;height:40px;border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--surface-2);color:var(--muted);
+  display:grid;place-items:center;flex:0 0 auto;
+  transition:all .2s ease;
+}
+.md-x:hover{color:var(--danger);border-color:var(--danger-border);background:var(--danger-bg)}
+
+.md-body{padding:22px 24px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.md-foot{
+  display:flex;gap:12px;
+  padding:18px 24px 24px;
+  border-top:1px solid var(--border);
+}
+.md-foot .btn{flex:1 1 0}
+
+/* ── Toasts ───────────────────────────────────────────────── */
+.toasts{
+  position:fixed;left:50%;
+  bottom:max(22px,env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  z-index:200;
+  display:flex;flex-direction:column;gap:10px;
+  width:min(93vw,440px);pointer-events:none;
+}
+.toast{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;
+  border-radius:16px;
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-lg);
+  font-size:.885rem;font-weight:600;
+  color:var(--text);
+  animation:tIn .3s cubic-bezier(.22,1,.36,1);
+  pointer-events:auto;
+}
+.toast.out{animation:tOut .25s ease forwards}
+.toast-mark{
+  width:30px;height:30px;border-radius:10px;
+  display:grid;place-items:center;color:#fff;flex:0 0 auto;
+  background:var(--grad-brand);
+}
+.toast.ok .toast-mark{background:linear-gradient(135deg,#10b981,#059669)}
+.toast.err .toast-mark{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+
+@keyframes tIn{from{opacity:0;transform:translateY(20px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes tOut{to{opacity:0;transform:translateY(14px) scale(.94)}}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.ft{
+  margin-top:24px;padding:52px 0 28px;
+  border-top:1px solid var(--border);
+  background:var(--bg-2);
+  position:relative;
+}
+.ft-grid{display:grid;gap:32px}
+@media(min-width:820px){.ft-grid{grid-template-columns:1.4fr 1fr 1fr;gap:40px}}
+
+.ft-brand{
+  display:inline-flex;align-items:center;gap:11px;
+  font-weight:800;font-size:1.05rem;
+  letter-spacing:-.03em;margin-bottom:12px;
+}
+.ft-desc{font-size:.87rem;color:var(--muted);max-width:44ch;line-height:1.7}
+
+.ft-title{
+  font-size:.72rem;font-weight:780;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;
+}
+.ft-list{display:flex;flex-direction:column;gap:10px;font-size:.88rem;color:var(--text-2)}
+.ft-list a{transition:color .2s ease}
+.ft-list a:hover{color:var(--v1)}
+
+.ft-chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip-m{
+  padding:7px 14px;border-radius:999px;
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  font-size:.79rem;font-weight:640;color:var(--text-2);
+}
+
+.ft-bot{
+  margin-top:30px;padding-top:22px;
+  border-top:1px solid var(--border);
+  display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:12px;
+  font-size:.81rem;color:var(--muted);
+}
+.sig{
+  font-weight:640;letter-spacing:.005em;
+  background:var(--grad-brand);background-size:200% 200%;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  animation:gradShift 8s ease infinite;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  body::before,body::after{animation:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a href="#home" class="logo" aria-label="Mishad Wifi Zone — Home">
+      <span class="logo-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+          <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+          <circle cx="12" cy="20" r="1.3" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+      <span class="logo-txt">
+        <span data-cfg="brand">Mishad Wifi Zone</span>
+        <small>Payment Portal</small>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#home">Home</a>
+      <a href="#how">How to Pay</a>
+      <a href="#submit">Submit Payment</a>
+    </nav>
+
+    <div class="hdr-act">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme">
+        <svg id="themeIco" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <svg id="menuIco" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="chip"><span class="pulse"></span> Payment Portal</span>
+        <h1>Fast Wi-Fi.<br><span class="accent">Simple Payment.</span></h1>
+        <p class="hero-sub">Submit your Wi-Fi payment details quickly and easily — pick a package, send the money, and share the details in one tap.</p>
+
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#submit">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="2.5"/>
+              <path d="M2 10h20"/>
+            </svg>
+            Make a Payment
+          </a>
+          <a class="btn btn-ghost" href="#how">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9.5"/>
+              <path d="M9.3 9.2a2.8 2.8 0 1 1 3.6 2.65c-.6.2-.9.7-.9 1.3v.5"/>
+              <circle cx="12" cy="17" r=".9" fill="currentColor" stroke="none"/>
+            </svg>
+            How to Pay
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat"><b>3</b><span>Wi-Fi Packages</span></div>
+          <div class="hero-stat"><b>4</b><span>Payment Methods</span></div>
+          <div class="hero-stat"><b>1-Tap</b><span>Send Details</span></div>
+        </div>
+      </div>
+
+      <!-- Payment number card -->
+      <div class="pay-card">
+        <span class="pay-tag"><span class="dot"></span> Payment Number</span>
+        <div class="pay-num" data-cfg="payNum">01873569069</div>
+        <p class="pay-mth" data-cfg="methods">bKash • Nagad • Rocket • Upay</p>
+
+        <div class="pay-div"></div>
+
+        <button class="pay-copy" id="copyBtn" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="12" height="12" rx="2.4"/>
+            <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+          </svg>
+          Copy Number
+        </button>
+
+        <p class="pay-help">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9.5"/>
+            <path d="M12 8h.01M11 12h1v4h1"/>
+          </svg>
+          Send Money (Personal) to this number, then submit the form below.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ HOW TO PAY ═══════════ -->
+<section class="sect sect-alt" id="how">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow">Step by Step</span>
+      <h2>How to Pay</h2>
+      <p>Nine simple steps. Do them in order and your payment details will reach the owner correctly the first time.</p>
+    </div>
+
+    <ol class="timeline">
+      <li class="tl-item"><span class="tl-num">01</span><div class="tl-body"><h3>Send Money to</h3><p><strong data-cfg="payNum">01873569069</strong> — use the Send Money option in your payment app.</p></div></li>
+      <li class="tl-item"><span class="tl-num">02</span><div class="tl-body"><h3>Select your Wi-Fi package</h3><p>Choose 1 Month, 15 Days or 7 Days below.</p></div></li>
+      <li class="tl-item"><span class="tl-num">03</span><div class="tl-body"><h3>Choose the payment method</h3><p>Pick the app you actually used — bKash, Nagad, Rocket or Upay.</p></div></li>
+      <li class="tl-item"><span class="tl-num">04</span><div class="tl-body"><h3>Enter the exact amount</h3><p>Filled automatically from your selected package.</p></div></li>
+      <li class="tl-item"><span class="tl-num">05</span><div class="tl-body"><h3>Enter your Transaction ID</h3><p>Copy it exactly from your payment confirmation SMS.</p></div></li>
+      <li class="tl-item"><span class="tl-num">06</span><div class="tl-body"><h3>Enter your name</h3><p>So the owner can identify your payment.</p></div></li>
+      <li class="tl-item"><span class="tl-num">07</span><div class="tl-body"><h3>MAC address (optional)</h3><p>A reference only — never required.</p></div></li>
+      <li class="tl-item"><span class="tl-num">08</span><div class="tl-body"><h3>Review the summary</h3><p>The live preview updates as you type.</p></div></li>
+      <li class="tl-item"><span class="tl-num">09</span><div class="tl-body"><h3>Send via WhatsApp / Email / Telegram</h3><p>One tap sends all the details to the owner.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════ SUBMIT ═══════════ -->
+<section class="sect" id="submit">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow">Payment Submission</span>
+      <h2>Submit Your Payment</h2>
+      <p>Pick a package, choose your method and fill in your details. Everything you need in one place.</p>
+    </div>
+
+    <h3 style="font-size:1.05rem;font-weight:740;letter-spacing:-.025em;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      <span style="display:inline-grid;place-items:center;width:26px;height:26px;border-radius:9px;background:var(--tint);color:var(--v1);font-size:.78rem;font-weight:800;">1</span>
+      Choose Your Package
+    </h3>
+    <div class="pkgs" id="pkgs" role="group" aria-label="Wi-Fi packages"></div>
+    <p class="grid-err" id="pkgErr" role="alert"></p>
+
+    <h3 style="font-size:1.05rem;font-weight:740;letter-spacing:-.025em;margin:38px 0 16px;display:flex;align-items:center;gap:10px;">
+      <span style="display:inline-grid;place-items:center;width:26px;height:26px;border-radius:9px;background:var(--tint);color:var(--v1);font-size:.78rem;font-weight:800;">2</span>
+      Choose Payment Method
+    </h3>
+    <div class="mths" id="mths" role="group" aria-label="Payment methods"></div>
+    <p class="grid-err" id="mthErr" role="alert"></p>
+
+    <div class="sub-lay">
+      <!-- FORM -->
+      <div class="panel">
+        <h3 class="panel-title">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          Your Details
+        </h3>
+        <p class="panel-sub">Fields marked <span class="req">*</span> are required.</p>
+
+        <form id="form" novalidate autocomplete="on">
+          <div class="fld">
+            <label for="cName">Customer Name <span class="req">*</span></label>
+            <div class="inp" id="w-cName">
+              <input type="text" id="cName" name="cName" placeholder="Enter your full name" autocomplete="name" maxlength="60" aria-required="true"/>
+            </div>
+            <p class="fld-err" id="e-cName" role="alert"></p>
+          </div>
+
+          <div class="fld">
+            <label for="amt">Payment Amount <span class="req">*</span></label>
+            <div class="inp" id="w-amt">
+              <span class="cur">৳</span>
+              <input type="number" id="amt" name="amt" placeholder="0" min="1" step="1" inputmode="decimal" aria-required="true"/>
+            </div>
+            <p class="hint">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+              Filled automatically from your selected package. Edit only if necessary.
+            </p>
+            <p class="fld-err" id="e-amt" role="alert"></p>
+          </div>
+
+          <div class="fld">
+            <label for="txId">Transaction ID <span class="req">*</span></label>
+            <div class="inp" id="w-txId">
+              <input type="text" id="txId" name="txId" placeholder="Enter your transaction ID" maxlength="60" spellcheck="false" aria-required="true"/>
+            </div>
+            <p class="fld-err" id="e-txId" role="alert"></p>
+          </div>
+
+          <div class="fld">
+            <label for="mac">MAC Address <span class="opt">(Optional)</span></label>
+            <div class="inp" id="w-mac">
+              <input type="text" id="mac" name="mac" placeholder="AA:BB:CC:DD:EE:FF" maxlength="17" spellcheck="false" autocapitalize="characters"/>
+            </div>
+            <p class="hint">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+              Leave empty if you don't want to provide it.
+            </p>
+            <p class="fld-err" id="e-mac" role="alert"></p>
+          </div>
+
+          <div class="form-act" id="submitAct">
+            <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m22 2-7 20-4-9-9-4Z"/>
+                <path d="M22 2 11 13"/>
+              </svg>
+              Submit Payment
+            </button>
+            <p class="form-note">Everything stays on this device until you send it.</p>
+          </div>
+        </form>
+      </div>
+
+      <!-- SUMMARY -->
+      <aside class="panel sum-card" aria-live="polite" aria-label="Live payment summary">
+        <div class="sum-head">
+          <span class="sum-title">Payment Summary</span>
+          <span class="live"><span class="dot"></span> Live</span>
+        </div>
+        <div class="rows" id="sumRows"></div>
+      </aside>
+    </div>
+
+    <!-- SUBMISSION PANEL -->
+    <div class="sub-panel" id="subPanel" hidden>
+      <div class="sp-head">
+        <div>
+          <h3>
+            <span class="ok-mark">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+            Ready to Send
+          </h3>
+          <p class="sp-meta">Request ID <strong id="spReq">—</strong></p>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="newBtn" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          New Payment
+        </button>
+      </div>
+
+      <p class="sp-note">Choose how you want to send your payment details.</p>
+
+      <div class="sends">
+        <button class="send wa" id="sendWa" type="button">
+          <span class="send-mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.95 1.16-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.9-.8-1.5-1.79-1.67-2.09-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47 0 1.46 1.06 2.87 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35Z"/>
+              <path d="M12.04 2C6.6 2 2.18 6.42 2.18 11.86c0 1.74.45 3.44 1.32 4.94L2.05 22l5.35-1.4a9.82 9.82 0 0 0 4.63 1.18h.01c5.43 0 9.85-4.42 9.85-9.86 0-2.63-1.02-5.11-2.88-6.97A9.79 9.79 0 0 0 12.04 2Zm0 17.98h-.01a8.15 8.15 0 0 1-4.15-1.14l-.3-.18-3.09.81.83-3.02-.19-.31a8.13 8.13 0 0 1-1.25-4.34c0-4.52 3.68-8.19 8.2-8.19 2.19 0 4.25.85 5.8 2.4a8.14 8.14 0 0 1 2.4 5.8c0 4.52-3.68 8.19-8.19 8.19Z"/>
+            </svg>
+          </span>
+          <span class="send-t">WhatsApp</span>
+          <span class="send-s">Send via WhatsApp</span>
+        </button>
+
+        <button class="send em" id="sendEm" type="button">
+          <span class="send-mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4.5" width="20" height="15" rx="2.6"/>
+              <path d="m3 7 8.15 5.6a1.5 1.5 0 0 0 1.7 0L21 7"/>
+            </svg>
+          </span>
+          <span class="send-t">Email</span>
+          <span class="send-s">Send via Email</span>
+        </button>
+
+        <button class="send tg" id="sendTg" type="button">
+          <span class="send-mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21.94 4.3 18.9 19.02c-.23 1.02-.84 1.27-1.7.79l-4.7-3.47-2.27 2.19c-.25.25-.46.46-.94.46l.33-4.77 8.68-7.84c.38-.34-.08-.52-.58-.19L6.02 12.9l-4.6-1.44c-1-.31-1.02-1 .21-1.48L20.2 2.9c.83-.3 1.56.2 1.3 1.4h.44Z"/>
+            </svg>
+          </span>
+          <span class="send-t">Telegram</span>
+          <span class="send-s">Send via Telegram</span>
+        </button>
+      </div>
+
+      <p class="sp-hint">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9.5"/><path d="M12 8h.01M11 12h1v4h1"/>
+        </svg>
+        <span><strong>Telegram:</strong> your details will be copied to the clipboard — the chat opens, then just paste and press send. WhatsApp and Email open with the message already filled in.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-brand">
+          <span class="logo-mark" aria-hidden="true" style="width:38px;height:38px;border-radius:12px;">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+              <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+              <circle cx="12" cy="20" r="1.3" fill="currentColor" stroke="none"/>
+            </svg>
+          </span>
+          <span data-cfg="brand">Mishad Wifi Zone</span>
+        </div>
+        <p class="ft-desc">Payment Portal for Mishad Wifi Zone customers.</p>
+      </div>
+
+      <div>
+        <p class="ft-title">Payment Methods</p>
+        <div class="ft-chips" id="ftChips"></div>
+      </div>
+
+      <div>
+        <p class="ft-title">Quick Links</p>
+        <div class="ft-list">
+          <a href="#home">Home</a>
+          <a href="#how">How to Pay</a>
+          <a href="#submit">Submit Payment</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ft-bot">
+      <span>© <span id="yr">2025</span> <span data-cfg="brand">Mishad Wifi Zone</span> — Payment Portal</span>
+      <span class="sig">Designed by Mishad</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════ CONFIRM MODAL ═══════════ -->
+<div class="ov" id="cfmModal" hidden>
+  <div class="md" role="dialog" aria-modal="true" aria-labelledby="cfmTitle">
+    <div class="md-head">
+      <div>
+        <h3 id="cfmTitle">Ready to Submit?</h3>
+        <p>Please review your payment details carefully before confirming.</p>
+      </div>
+      <button class="md-x" type="button" data-close="cfmModal" aria-label="Close">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="md-body"><div class="rows" id="cfmRows"></div></div>
+    <div class="md-foot">
+      <button class="btn btn-ghost" type="button" id="editBtn">Edit Details</button>
+      <button class="btn btn-primary" type="button" id="okBtn">Confirm &amp; Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TOASTS ═══════════ -->
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   MISHAD WIFI ZONE · AURORA GLASS EDITION
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ── 1. CONFIG ─────────────────────────────────────────── */
+const CONFIG = {
+  brandName: "Mishad Wifi Zone",
+  paymentNumber: "01873569069",
+  whatsappNumber: "01873569069",
+  email: "mmishad7@gmail.com",
+  telegramUsername: "xyz9825",
+  paymentMethods: ["bKash", "Nagad", "Rocket", "Upay"],
+  packages: [
+    { id: "monthly", name: "1 Month", price: 100, duration: "30 Days" },
+    { id: "15days",  name: "15 Days", price: 50,  duration: "15 Days" },
+    { id: "7days",   name: "7 Days",  price: 25,  duration: "7 Days" }
+  ]
+};
+
+const KEY = {
+  payments: "mishadWifiZonePayments",
+  theme:    "mishadWifiZoneTheme"
+};
+
+const M_COLORS = {
+  "bKash":  "linear-gradient(135deg,#e2136e,#a10a4f)",
+  "Nagad":  "linear-gradient(135deg,#f6921e,#c96a0a)",
+  "Rocket": "linear-gradient(135deg,#8b3f98,#5f2569)",
+  "Upay":   "linear-gradient(135deg,#009fdf,#0074a3)"
+};
+
+/* ── 2. STATE ──────────────────────────────────────────── */
+const S = {
+  pkgId: null,
+  method: null,
+  sub: null,
+  busy: false
+};
+
+/* ── 3. DOM ────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const el = {};
+function cacheDom(){
+  el.html = document.documentElement;
+  el.nav = $('nav'); el.menuBtn = $('menuBtn'); el.menuIco = $('menuIco');
+  el.themeBtn = $('themeBtn'); el.themeIco = $('themeIco');
+  el.copyBtn = $('copyBtn');
+  el.pkgs = $('pkgs'); el.mths = $('mths');
+  el.pkgErr = $('pkgErr'); el.mthErr = $('mthErr');
+  el.form = $('form'); el.cName = $('cName'); el.amt = $('amt');
+  el.txId = $('txId'); el.mac = $('mac');
+  el.submitBtn = $('submitBtn'); el.submitAct = $('submitAct');
+  el.sumRows = $('sumRows');
+  el.subPanel = $('subPanel'); el.spReq = $('spReq');
+  el.newBtn = $('newBtn');
+  el.sendWa = $('sendWa'); el.sendEm = $('sendEm'); el.sendTg = $('sendTg');
+  el.cfmModal = $('cfmModal'); el.cfmRows = $('cfmRows');
+  el.editBtn = $('editBtn'); el.okBtn = $('okBtn');
+  el.toasts = $('toasts'); el.ftChips = $('ftChips'); el.yr = $('yr');
+}
+
+/* ── 4. UTILITIES ──────────────────────────────────────── */
+function esc(v){
+  return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+const pad2 = n => String(n).padStart(2,'0');
+function fmtAmt(v){
+  const n = Number(v);
+  if(!isFinite(n) || n <= 0) return '';
+  return n % 1 === 0 ? String(n) : n.toFixed(2);
+}
+const getPkg = id => CONFIG.packages.find(p => p.id === id) || null;
+
+/* ── 5. SAFE STORAGE ───────────────────────────────────── */
+const store = {
+  get(k, fb){ try{ const r = localStorage.getItem(k); return r === null ? fb : r; }catch(e){ return fb; } },
+  set(k, v){
+    try{ localStorage.setItem(k, v); return true; }
+    catch(e){
+      toast(e && (e.name === 'QuotaExceededError' || e.code === 22)
+        ? 'Storage is full. Could not save data.'
+        : 'Local storage is unavailable.', 'err');
+      return false;
+    }
+  }
+};
+
+/* ── 6. TOASTS ─────────────────────────────────────────── */
+const T_ICON = {
+  ok:  '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  err: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  info:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 8h.01M11 12h1v4h1"/></svg>'
+};
+function toast(msg, type){
+  if(!el.toasts) return;
+  type = type || 'info';
+  const n = document.createElement('div');
+  n.className = 'toast ' + (type === 'ok' ? 'ok' : type === 'err' ? 'err' : '');
+  n.setAttribute('role','status');
+  n.innerHTML = '<span class="toast-mark">' + (T_ICON[type] || T_ICON.info) + '</span><span>' + esc(msg) + '</span>';
+  el.toasts.appendChild(n);
+  while(el.toasts.children.length > 4) el.toasts.removeChild(el.toasts.firstElementChild);
+  setTimeout(() => {
+    n.classList.add('out');
+    setTimeout(() => n.parentNode && n.parentNode.removeChild(n), 260);
+  }, 3000);
+}
+
+/* ── 7. CLIPBOARD ──────────────────────────────────────── */
+function copyText(text){
+  return new Promise(resolve => {
+    let done = false;
+    const finish = ok => { if(!done){ done = true; resolve(ok); } };
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(text)
+          .then(() => finish(true))
+          .catch(() => finish(legacyCopy(text)));
+        return;
+      }
+    }catch(e){}
+    finish(legacyCopy(text));
+  });
+}
+function legacyCopy(text){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  }catch(e){ return false; }
+}
+
+/* ── 8. THEME ──────────────────────────────────────────── */
+const ICON_SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+const ICON_MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>';
+function applyTheme(t){
+  el.html.setAttribute('data-theme', t);
+  if(el.themeIco) el.themeIco.innerHTML = t === 'dark' ? ICON_MOON : ICON_SUN;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', t === 'dark' ? '#07070f' : '#7c3aed');
+}
+function initTheme(){
+  let t = store.get(KEY.theme, null);
+  if(t !== 'dark' && t !== 'light'){
+    t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  applyTheme(t);
+}
+function toggleTheme(){
+  const next = el.html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  store.set(KEY.theme, next);
+  toast(next === 'dark' ? 'Dark mode' : 'Light mode', 'info');
+}
+
+/* ── 9. RENDER PACKAGES ────────────────────────────────── */
+function renderPkgs(){
+  el.pkgs.innerHTML = CONFIG.packages.map((p, i) => `
+    <button type="button" class="pkg" data-id="${esc(p.id)}" aria-pressed="false"
+            aria-label="Select ${esc(p.name)}, ${p.price} taka, ${esc(p.duration)}">
+      <span class="pkg-num">0${i+1}</span>
+      <span class="pkg-check" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      </span>
+      <span class="pkg-name">${esc(p.name)}</span>
+      <span class="pkg-price"><small>৳</small>${esc(fmtAmt(p.price))}</span>
+      <span class="pkg-dur">${esc(p.duration)}</span>
+      <span class="pkg-cta">Select Package</span>
+    </button>
+  `).join('');
+  el.pkgs.querySelectorAll('.pkg').forEach(card => {
+    card.addEventListener('click', () => selectPkg(card.dataset.id));
+  });
+}
+function selectPkg(id){
+  const p = getPkg(id);
+  if(!p) return;
+  S.pkgId = id;
+  el.pkgs.querySelectorAll('.pkg').forEach(c => {
+    const on = c.dataset.id === id;
+    c.setAttribute('aria-pressed', on ? 'true' : 'false');
+    const cta = c.querySelector('.pkg-cta');
+    if(cta) cta.textContent = on ? 'Selected' : 'Select Package';
+  });
+  el.amt.value = fmtAmt(p.price);
+  clearGrid('pkg'); clearField('amt');
+  onMutate();
+}
+
+/* ── 10. RENDER METHODS ────────────────────────────────── */
+function renderMths(){
+  el.mths.innerHTML = CONFIG.paymentMethods.map(m => {
+    const bg = M_COLORS[m] || 'linear-gradient(135deg,#7c3aed,#06b6d4)';
+    return `
+      <button type="button" class="mth" data-m="${esc(m)}" aria-pressed="false" aria-label="Pay with ${esc(m)}">
+        <span class="mth-check" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <span class="mth-mark" style="background:${bg}" aria-hidden="true">${esc(m.charAt(0))}</span>
+        <span class="mth-name">${esc(m)}</span>
+      </button>
+    `;
+  }).join('');
+  el.mths.querySelectorAll('.mth').forEach(card => {
+    card.addEventListener('click', () => selectMth(card.dataset.m));
+  });
+}
+function selectMth(m){
+  if(CONFIG.paymentMethods.indexOf(m) === -1) return;
+  S.method = m;
+  el.mths.querySelectorAll('.mth').forEach(c => {
+    c.setAttribute('aria-pressed', c.dataset.m === m ? 'true' : 'false');
+  });
+  clearGrid('mth');
+  onMutate();
+}
+
+/* ── 11. FORM DATA & VALIDATION ────────────────────────── */
+function getData(){
+  return {
+    cName: (el.cName.value || '').trim(),
+    amt:   (el.amt.value || '').trim(),
+    txId:  (el.txId.value || '').trim(),
+    mac:   (el.mac.value || '').trim()
+  };
+}
+const MAC_RE = /^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$/;
+
+function setField(id, msg){
+  const w = $('w-' + id), e = $('e-' + id);
+  if(w) w.classList.add('bad');
+  if(e){ e.textContent = msg; e.classList.add('on'); }
+}
+function clearField(id){
+  const w = $('w-' + id), e = $('e-' + id);
+  if(w) w.classList.remove('bad');
+  if(e){ e.textContent = ''; e.classList.remove('on'); }
+}
+function setGrid(k, msg){
+  const n = k === 'pkg' ? el.pkgErr : el.mthErr;
+  if(!n) return;
+  n.textContent = msg; n.classList.add('on');
+}
+function clearGrid(k){
+  const n = k === 'pkg' ? el.pkgErr : el.mthErr;
+  if(!n) return;
+  n.textContent = ''; n.classList.remove('on');
+}
+function clearAll(){
+  ['cName','amt','txId','mac'].forEach(clearField);
+  clearGrid('pkg'); clearGrid('mth');
+}
+function validate(){
+  const d = getData(), errs = {};
+  if(!d.cName) errs.cName = 'Please enter your full name.';
+  else if(d.cName.length < 2) errs.cName = 'Name must be at least 2 characters.';
+  if(!S.pkgId) errs.pkg = 'Please select a package.';
+  if(!S.method) errs.mth = 'Please select a payment method.';
+  const amtNum = Number(d.amt);
+  if(!d.amt) errs.amt = 'Please enter the payment amount.';
+  else if(!isFinite(amtNum) || amtNum <= 0) errs.amt = 'Amount must be greater than 0.';
+  if(!d.txId) errs.txId = 'Transaction ID is required.';
+  else if(d.txId.length < 4) errs.txId = 'Transaction ID looks too short.';
+  if(d.mac && !MAC_RE.test(d.mac)) errs.mac = 'Invalid MAC address. Use format AA:BB:CC:DD:EE:FF.';
+  return { ok: !Object.keys(errs).length, errs, d };
+}
+function showErrs(errs){
+  clearAll();
+  let first = null;
+  if(errs.cName){ setField('cName', errs.cName); first = first || el.cName; }
+  if(errs.pkg){ setGrid('pkg', errs.pkg); first = first || el.pkgs; }
+  if(errs.mth){ setGrid('mth', errs.mth); first = first || el.mths; }
+  if(errs.amt){ setField('amt', errs.amt); first = first || el.amt; }
+  if(errs.txId){ setField('txId', errs.txId); first = first || el.txId; }
+  if(errs.mac){ setField('mac', errs.mac); first = first || el.mac; }
+  if(first && first.scrollIntoView) first.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function firstErr(errs){
+  for(const k of ['cName','pkg','mth','amt','txId','mac']){
+    if(errs[k]) return errs[k];
+  }
+  return 'Please check your details.';
+}
+
+/* ── 12. DATE / TIME / ID ──────────────────────────────── */
+function fmtDate(d){
+  try{ return d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}); }
+  catch(e){ return d.toDateString(); }
+}
+function fmtTime(d){
+  try{ return d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true}); }
+  catch(e){ return pad2(d.getHours()) + ':' + pad2(d.getMinutes()); }
+}
+function genReq(d){
+  const y = d.getFullYear();
+  const m = pad2(d.getMonth() + 1);
+  const day = pad2(d.getDate());
+  const r = String(Math.floor(Math.random()*90000) + 10000);
+  return 'PAY-' + y + m + day + '-' + r;
+}
+
+/* ── 13. LIVE VIEW MODEL ───────────────────────────────── */
+function liveVM(){
+  const d = getData(), p = getPkg(S.pkgId), s = S.sub;
+  return {
+    cName: d.cName,
+    pkgName: p ? p.name : '',
+    dur: p ? p.duration : '',
+    amt: d.amt,
+    method: S.method || '',
+    payNum: CONFIG.paymentNumber,
+    txId: d.txId,
+    mac: d.mac,
+    date: s ? s.date : '',
+    time: s ? s.time : '',
+    reqId: s ? s.reqId : ''
+  };
+}
+function buildItems(vm, opts){
+  opts = opts || {};
+  const ph = opts.ph || '—';
+  const pend = opts.pend || 'Set on confirm';
+  const items = [];
+  const add = (k, v, cls, emptyTxt) => {
+    const empty = !v;
+    items.push({ k, v: empty ? (emptyTxt || ph) : v, empty, cls: cls || '' });
+  };
+  add('Customer Name', esc(vm.cName));
+  add('Package', esc(vm.pkgName));
+  add('Duration', esc(vm.dur));
+  add('Amount', vm.amt ? '৳' + esc(fmtAmt(vm.amt)) : '', 'amt');
+  add('Payment Method', esc(vm.method));
+  add('Payment Number', esc(vm.payNum));
+  add('Transaction ID', esc(vm.txId));
+  if(vm.mac){
+    items.push({ k:'MAC Address', v: esc(vm.mac), empty:false, cls:'' });
+  }
+  add('Payment Date', esc(vm.date), '', pend);
+  add('Payment Time', esc(vm.time), '', pend);
+  add('Request ID', esc(vm.reqId), '', pend);
+  return items;
+}
+function renderRows(target, vm, opts){
+  target.innerHTML = buildItems(vm, opts).map(it => `
+    <div class="row">
+      <span class="row-k">${esc(it.k)}</span>
+      <span class="row-v ${it.empty?'blank ':''}${it.cls}">${it.v}</span>
+    </div>
+  `).join('');
+}
+function renderLive(){ renderRows(el.sumRows, liveVM(), {ph:'—'}); }
+
+/* ── 14. MESSAGE GENERATOR ─────────────────────────────── */
+function buildMessage(p){
+  const L = [];
+  L.push('Payment Submission');
+  L.push('');
+  L.push('Customer Name: ' + p.customerName);
+  L.push('Package: ' + p.packageName);
+  L.push('Duration: ' + p.duration);
+  L.push('Amount: ৳' + fmtAmt(p.amount));
+  L.push('Payment Method: ' + p.paymentMethod);
+  L.push('Payment Number: ' + p.paymentNumber);
+  L.push('Transaction ID: ' + p.transactionId);
+  if(p.macAddress) L.push('MAC Address: ' + p.macAddress);
+  L.push('Payment Date: ' + p.paymentDate);
+  L.push('Payment Time: ' + p.paymentTime);
+  L.push('Request ID: ' + p.requestId);
+  L.push('');
+  L.push('Please verify my payment.');
+  return L.join('\n');
+}
+
+/* ── 15. RECORD ────────────────────────────────────────── */
+function buildRecord(){
+  const d = getData(), p = getPkg(S.pkgId), s = S.sub;
+  return {
+    requestId: s.reqId,
+    customerName: d.cName,
+    packageId: S.pkgId,
+    packageName: p ? p.name : '',
+    duration: p ? p.duration : '',
+    amount: Number(d.amt),
+    paymentMethod: S.method,
+    paymentNumber: CONFIG.paymentNumber,
+    transactionId: d.txId,
+    macAddress: d.mac || '',
+    paymentDate: s.date,
+    paymentTime: s.time,
+    paymentTimestamp: s.ts,
+    status: 'Submitted'
+  };
+}
+/* Silent persistence — no UI exposure */
+function appendRecord(rec){
+  const raw = store.get(KEY.payments, '[]');
+  let list = [];
+  try{ const p = JSON.parse(raw); list = Array.isArray(p) ? p : []; }catch(e){ list = []; }
+  list.push(rec);
+  store.set(KEY.payments, JSON.stringify(list));
+}
+function findRec(id){
+  const raw = store.get(KEY.payments, '[]');
+  try{
+    const list = JSON.parse(raw);
+    if(Array.isArray(list)) return list.find(r => r.requestId === id) || null;
+  }catch(e){}
+  return null;
+}
+
+/* ── 16. SUBMISSION FLOW ───────────────────────────────── */
+function onSubmit(e){
+  if(e) e.preventDefault();
+  if(S.busy) return;
+  const r = validate();
+  if(!r.ok){ showErrs(r.errs); toast(firstErr(r.errs), 'err'); return; }
+  clearAll();
+  renderRows(el.cfmRows, liveVM(), {ph:'—'});
+  openModal(el.cfmModal);
+  setTimeout(() => el.okBtn && el.okBtn.focus(), 240);
+}
+
+function confirmAndSave(){
+  if(S.busy) return;
+  const r = validate();
+  if(!r.ok){
+    closeModal(el.cfmModal);
+    showErrs(r.errs);
+    toast(firstErr(r.errs), 'err');
+    return;
+  }
+  S.busy = true;
+  setLoad(el.okBtn, true, 'Preparing Payment...');
+
+  setTimeout(() => {
+    if(!S.sub){
+      const now = new Date();
+      S.sub = {
+        reqId: genReq(now),
+        date: fmtDate(now),
+        time: fmtTime(now),
+        ts: now.toISOString()
+      };
+      appendRecord(buildRecord());
+    }
+    renderLive();
+    showSubPanel();
+    setLoad(el.okBtn, false);
+    S.busy = false;
+    closeModal(el.cfmModal);
+    toast('Payment ready! Choose how to send it.', 'ok');
+    setTimeout(() => {
+      el.subPanel && el.subPanel.scrollIntoView({behavior:'smooth', block:'center'});
+    }, 200);
+  }, 420);
+}
+
+function showSubPanel(){
+  if(!S.sub) return;
+  el.spReq.textContent = S.sub.reqId;
+  el.subPanel.hidden = false;
+  el.submitAct.hidden = true;
+}
+function hideSubPanel(){
+  el.subPanel.hidden = true;
+  el.submitAct.hidden = false;
+}
+function resetForNew(){
+  el.form.reset();
+  S.pkgId = null; S.method = null; S.sub = null;
+  el.pkgs.querySelectorAll('.pkg').forEach(c => {
+    c.setAttribute('aria-pressed','false');
+    const cta = c.querySelector('.pkg-cta');
+    if(cta) cta.textContent = 'Select Package';
+  });
+  el.mths.querySelectorAll('.mth').forEach(c => c.setAttribute('aria-pressed','false'));
+  clearAll();
+  hideSubPanel();
+  renderLive();
+  toast('Ready for a new payment.', 'info');
+  const t = $('submit');
+  if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(() => el.cName && el.cName.focus(), 420);
+}
+function onMutate(){
+  if(S.sub){
+    S.sub = null;
+    hideSubPanel();
+    toast('Details changed — please submit again.', 'info');
+  }
+  renderLive();
+}
+
+/* ── 17. SENDING ───────────────────────────────────────── */
+function currentRec(){
+  if(!S.sub) return null;
+  return findRec(S.sub.reqId) || buildRecord();
+}
+function toIntlBD(num){
+  const d = String(num).replace(/\D/g,'');
+  if(d.indexOf('880') === 0) return d;
+  if(d.charAt(0) === '0') return '880' + d.slice(1);
+  return '880' + d;
+}
+function sendWa(){
+  if(S.busy) return;
+  const r = currentRec();
+  if(!r){ toast('Please submit your payment first.','err'); return; }
+  S.busy = true;
+  setLoad(el.sendWa, true, 'Opening WhatsApp...');
+  const msg = buildMessage(r);
+  const url = 'https://wa.me/' + toIntlBD(CONFIG.whatsappNumber) + '?text=' + encodeURIComponent(msg);
+  setTimeout(() => {
+    try{
+      const w = window.open(url, '_blank', 'noopener');
+      if(!w) window.location.href = url;
+      toast('Opening WhatsApp...', 'ok');
+    }catch(e){ toast('Could not open WhatsApp.', 'err'); }
+    setLoad(el.sendWa, false);
+    S.busy = false;
+  }, 400);
+}
+function sendEm(){
+  if(S.busy) return;
+  const r = currentRec();
+  if(!r){ toast('Please submit your payment first.','err'); return; }
+  S.busy = true;
+  setLoad(el.sendEm, true, 'Opening Email...');
+  const msg = buildMessage(r);
+  const subj = 'Wi-Fi Payment Submission — ' + r.customerName + ' — ' + r.requestId;
+  const url = 'mailto:' + encodeURIComponent(CONFIG.email) +
+              '?subject=' + encodeURIComponent(subj) +
+              '&body=' + encodeURIComponent(msg);
+  setTimeout(() => {
+    try{
+      window.location.href = url;
+      toast('Opening Email...', 'ok');
+    }catch(e){ toast('Could not open your email app.', 'err'); }
+    setLoad(el.sendEm, false);
+    S.busy = false;
+  }, 400);
+}
+function sendTg(){
+  if(S.busy) return;
+  const r = currentRec();
+  if(!r){ toast('Please submit your payment first.','err'); return; }
+  S.busy = true;
+  setLoad(el.sendTg, true, 'Opening Telegram...');
+  const msg = buildMessage(r);
+  copyText(msg).then(ok => {
+    toast(ok ? 'Payment details copied. Opening Telegram...' : 'Could not copy — please copy manually.',
+          ok ? 'ok' : 'err');
+    const url = 'https://t.me/' + encodeURIComponent(CONFIG.telegramUsername);
+    setTimeout(() => {
+      try{
+        const w = window.open(url, '_blank', 'noopener');
+        if(!w) window.location.href = url;
+      }catch(e){ toast('Could not open Telegram.', 'err'); }
+      setLoad(el.sendTg, false);
+      S.busy = false;
+    }, 520);
+  });
+}
+
+/* ── 18. MODALS ────────────────────────────────────────── */
+let lastFocus = null;
+function openModal(m){
+  if(!m) return;
+  lastFocus = document.activeElement;
+  m.hidden = false;
+  void m.offsetWidth;
+  m.classList.add('on');
+  document.body.style.overflow = 'hidden';
+  const f = m.querySelector('button, [href], input, [tabindex]:not([tabindex="-1"])');
+  if(f) setTimeout(() => f.focus(), 80);
+}
+function closeModal(m){
+  if(!m) return;
+  m.classList.remove('on');
+  document.body.style.overflow = '';
+  setTimeout(() => { m.hidden = true; }, 240);
+  if(lastFocus && lastFocus.focus){ try{ lastFocus.focus(); }catch(e){} }
+}
+
+/* ── 19. LOADING STATE ─────────────────────────────────── */
+function setLoad(btn, on, txt){
+  if(!btn) return;
+  if(on){
+    if(!btn.dataset.orig) btn.dataset.orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>' + esc(txt || 'Loading...');
+  } else {
+    btn.disabled = false;
+    if(btn.dataset.orig){ btn.innerHTML = btn.dataset.orig; delete btn.dataset.orig; }
+  }
+}
+
+/* ── 20. MOBILE MENU ───────────────────────────────────── */
+function toggleMenu(force){
+  const on = typeof force === 'boolean' ? force : !el.nav.classList.contains('on');
+  el.nav.classList.toggle('on', on);
+  el.menuBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+  el.menuIco.innerHTML = on
+    ? '<path d="M18 6 6 18M6 6l12 12"/>'
+    : '<path d="M3 6h18M3 12h18M3 18h18"/>';
+}
+
+/* ── 21. BIND EVENTS ───────────────────────────────────── */
+function bind(){
+  el.themeBtn.addEventListener('click', toggleTheme);
+  el.menuBtn.addEventListener('click', () => toggleMenu());
+  el.nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  document.addEventListener('click', e => {
+    if(!el.nav.classList.contains('on')) return;
+    if(el.nav.contains(e.target) || el.menuBtn.contains(e.target)) return;
+    toggleMenu(false);
+  });
+
+  el.copyBtn.addEventListener('click', () => {
+    copyText(CONFIG.paymentNumber).then(ok => {
+      toast(ok ? 'Payment number copied!' : 'Could not copy — please copy manually.', ok ? 'ok' : 'err');
+    });
+  });
+
+  el.form.addEventListener('submit', onSubmit);
+  el.form.addEventListener('input', e => {
+    const id = e.target && e.target.id;
+    if(['cName','amt','txId','mac'].indexOf(id) !== -1) clearField(id);
+
+    if(id === 'mac'){
+      const atEnd = e.target.selectionStart === e.target.value.length;
+      const cleaned = e.target.value.replace(/[^0-9a-fA-F]/g,'').slice(0,12);
+      const grp = cleaned.match(/.{1,2}/g);
+      const fmt = grp ? grp.join(':') : '';
+      if(fmt !== e.target.value){
+        e.target.value = fmt;
+        if(atEnd){ try{ e.target.setSelectionRange(fmt.length, fmt.length); }catch(_){} }
+      }
+    }
+    onMutate();
+  });
+
+  el.editBtn.addEventListener('click', () => {
+    closeModal(el.cfmModal);
+    setTimeout(() => el.cName && el.cName.focus(), 260);
+  });
+  el.okBtn.addEventListener('click', confirmAndSave);
+  el.newBtn.addEventListener('click', resetForNew);
+
+  el.sendWa.addEventListener('click', sendWa);
+  el.sendEm.addEventListener('click', sendEm);
+  el.sendTg.addEventListener('click', sendTg);
+
+  document.querySelectorAll('[data-close]').forEach(b => {
+    b.addEventListener('click', () => closeModal($(b.dataset.close)));
+  });
+  [el.cfmModal].forEach(m => {
+    if(!m) return;
+    m.addEventListener('click', e => { if(e.target === m) closeModal(m); });
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape'){
+      [el.cfmModal].forEach(m => m && !m.hidden && closeModal(m));
+      if(el.nav.classList.contains('on')) toggleMenu(false);
+    }
+  });
+  window.addEventListener('resize', () => {
+    if(window.innerWidth >= 900 && el.nav.classList.contains('on')) toggleMenu(false);
+  });
+  window.addEventListener('error', () => {
+    if(S.busy){
+      S.busy = false;
+      [el.submitBtn, el.okBtn, el.sendWa, el.sendEm, el.sendTg].forEach(b => setLoad(b, false));
+    }
+  });
+}
+
+/* ── 22. INJECT CONFIG ─────────────────────────────────── */
+function inject(){
+  document.querySelectorAll('[data-cfg="brand"]').forEach(n => n.textContent = CONFIG.brandName);
+  document.querySelectorAll('[data-cfg="payNum"]').forEach(n => n.textContent = CONFIG.paymentNumber);
+  document.querySelectorAll('[data-cfg="methods"]').forEach(n => n.textContent = CONFIG.paymentMethods.join(' • '));
+  if(el.ftChips){
+    el.ftChips.innerHTML = CONFIG.paymentMethods.map(m =>
+      '<span class="chip-m">' + esc(m) + '</span>'
+    ).join('');
+  }
+  if(el.yr) el.yr.textContent = String(new Date().getFullYear());
+}
+
+/* ── 23. INIT ──────────────────────────────────────────── */
+function init(){
+  try{
+    cacheDom();
+    initTheme();
+    inject();
+    renderPkgs();
+    renderMths();
+    renderLive();
+    bind();
+    el.subPanel.hidden = true;
+    el.submitAct.hidden = false;
+  }catch(e){
+    try{ console.error('Init error:', e); }catch(_){}
+  }
+}
+
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
+})();
+</script>
+</body>
+</html>
